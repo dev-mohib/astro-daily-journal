@@ -1,0 +1,20 @@
+---
+import { getCollection } from "astro:content";
+import JournalCard from "../components/JournalCard.astro";
+import MainLayout from "../loyouts/main-layout.astro"
+export const prerender = true
+const allJournals = (await getCollection('journals')).sort(
+  (a, b) => b.data.date.valueOf() - a.data.date.valueOf()
+);
+---
+<MainLayout class="">
+	<div class="flex justify-between my-5 px-5">
+		<h1 class="font-bold py-5 text-2xl">My Journals</h1>
+		<a href="/new" class="flex justify-center items-center text-white px-10 py-0 bg-blue-500 rounded-lg hover:bg-blue-400">Create Journal</a>
+	</div>
+	<div class="flex flex-row flex-wrap justify-start">
+		{
+			allJournals.map(journal => <JournalCard title={journal.data.title} pubDate={journal.data.date} slug={journal.slug} />)
+		}
+	</div>
+</MainLayout>

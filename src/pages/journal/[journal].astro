@@ -1,0 +1,26 @@
+---
+import { getCollection } from 'astro:content';
+import { getEntry } from 'astro:content';
+export const prerender = true
+export async function getStaticPaths() {
+    const paramsData = Array.from((await getCollection("journals")).map(j => ({params : {
+        journal : j.slug
+    }})));
+  return paramsData;
+}
+const { journal } = Astro.params
+
+
+const { render, data } = await getEntry('journals', journal);
+
+const { Content } = await render();
+---
+
+<div>
+    <h1 class="pt-5 font-bold px-4"> {data.title }</h1>
+    <div class="w-full h-0.5 bg-gray-300 my-5" />
+    <div class="border-2 border-gray-300 my-5 mx-10 p-5 prose prose-sm">
+        <Content />
+    </div>
+</div>
+

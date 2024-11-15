@@ -1,0 +1,8 @@
+---
+const { title, pubDate, slug } = Astro.props
+---
+
+<a href={`/journal/${slug}`} class="flex flex-col bg-gray-200 rounded-lg m-3 shadow-lg w-1/5 px-5 py-8">
+    <h2 class="font-bold py-3">{title}</h2>
+    <p>{pubDate.toDateString()}</p>
+</a>
